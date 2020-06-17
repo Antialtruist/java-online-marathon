@@ -7,26 +7,26 @@ package sprint01.PracticeTaskClassDesignEncapsulationQuiz;
 //		4. Create variable with name 'employeesInfo' of String type.
 //		5. Using a loop, iterrate across array and write to variable named 'employeesInfo' info about each employee in next fommat:
 
-Employee emp1 = new Employee();
-Employee emp2 = new Employee();
-
-emp1.fullName = "Demis";
-emp1.salary = 1000.0f;
+	Employee emp1 = new Employee();
+	Employee emp2 = new Employee();
 	
-emp2.fullName = "Roza";
-emp2.salary = 500.0f;
+	emp1.fullName = "Demis";
+	emp1.salary = 1000.0f;
+		
+	emp2.fullName = "Roza";
+	emp2.salary = 500.0f;
+		
+	Employee [] employees = {emp1, emp2};
+		
+	String employeesInfo = "[{fullName: \"";
 	
-Employee [] employees = {emp1, emp2};
+	for (int i = 0; i < employees.length; i++) {
 	
-String employeesInfo = "[{fullName: \"";
-
-for (int i = 0; i < employees.length; i++) {
-    	
-if(i != employees.length-1) { 
-employeesInfo += employees[i].fullName + "\", salary: " + employees[i].salary + "}, {fullName: \"";
-} else {
-employeesInfo += employees[i].fullName + "\", salary: " + employees[i].salary;
-}
-}
-
-employeesInfo += "}]";
+		if(i != employees.length-1) { 
+			employeesInfo += employees[i].fullName + "\", salary: " + employees[i].salary + "}, {fullName: \"";
+		} else {
+			employeesInfo += employees[i].fullName + "\", salary: " + employees[i].salary;
+		}
+	}
+	
+	employeesInfo += "}]";
