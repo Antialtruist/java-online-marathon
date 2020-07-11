@@ -63,23 +63,18 @@ class Interactor {
 			x = uo.apply(initializer);
 			System.out.println("key = " + x);
 			notify();
-			try {
-				wait(5000);
-			} catch (InterruptedException e) {
-			}
+			wait();
 			System.out.println("Serving thread resumed");
 		}
 	}
 
 	public void consume(BinaryOperator<Integer> bo, int operand2) throws InterruptedException {
 		synchronized (this) {
-			try {
-				wait(3000);
-			} catch (InterruptedException e) {
-			}
+			wait();
 			System.out.println("Consuming thread received the key. key = " + x);
 			x = bo.apply(x, operand2);
 			System.out.println("Consuming thread changed the key. key = " + x);
+			notify();
 		}
 	}
 }

@@ -42,46 +42,41 @@ class MyThreads {
 	public static int n;
 	public static int m;
 
-	public static Thread t1 = new Thread() {
-		public void run() {
-
-// 1
+	public static Thread t1 = new Thread(() -> {
+		try {
 			synchronized (den) {
 				for (int i = 0; i < 5; i++, n++)
 					System.out.println("Thread1 n = " + n);
 				Thread.yield();
 			}
 
-// 4
 			synchronized (ada) {
-				try {
-					ada.wait(3000);
-				} catch (InterruptedException e) {
+				ada.notifyAll();
+				ada.wait(1000);
+				synchronized (den) {
+					for (int i = 0; i < 5; i++, m++)
+						System.out.println("Thread1 m = " + m);
+					System.out.println("Thread1 success!");
 				}
-				for (int i = 0; i < 5; i++, m++)
-					System.out.println("Thread1 m = " + m);
-				System.out.println("Thread1 success!");
 			}
+		} catch (InterruptedException e) {
 		}
-	};
+	});
 
-	public static Thread t2 = new Thread() {
-		public void run() {
-
-// 2
+	public static Thread t2 = new Thread(() -> {
+		try {
 			synchronized (ada) {
+				ada.wait(1000);
 				for (int i = 0; i < 5; i++, m++)
 					System.out.println("Thread2 m = " + m);
-				Thread.yield();
+				synchronized (den) {
+					for (int i = 0; i < 5; i++, n++)
+						System.out.println("Thread2 n = " + n);
+					System.out.println("Thread2 success!");
+				}
+				ada.notifyAll();
 			}
-
-// 3
-			synchronized (den) {
-				for (int i = 0; i < 5; i++, n++)
-					System.out.println("Thread2 n = " + n);
-				System.out.println("Thread2 success!");
-				den.notifyAll();
-			}
+		} catch (InterruptedException e) {
 		}
-	};
+	});
 }
