@@ -9,6 +9,11 @@
 <body>
 	<%@include file="header.html" %>
 	<br><br>
+	<%
+        String message = (String) request.getAttribute("message");
+    %>
+    <div><%=message%></div>
+    <br>
 	<form action="/records/create" method="post">
 		<table>
 			<tr>

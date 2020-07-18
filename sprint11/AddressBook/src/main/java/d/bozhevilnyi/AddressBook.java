@@ -1,7 +1,9 @@
 package d.bozhevilnyi;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 enum SortOrder {
@@ -35,6 +37,24 @@ public class AddressBook implements Iterable {
         for (int i = 0; i < counter; i++) {
             if (addressBook[i].person.equals(person)) {
                 return addressBook[i].address;
+            }
+        }
+        return null;
+    }
+    
+    public List<Address> readAll(){
+    	List<Address> addresses = new ArrayList<>();
+        for (int i = 0; i < counter; i++) {
+            addresses.add(new Address(addressBook[i].person.firstName, addressBook[i].person.lastName, addressBook[i].address));
+        }
+        return addresses;
+    }
+    
+    public Address getAddress(String firstName, String lastName) {
+        NameAddressPair.Person person = new NameAddressPair.Person(firstName, lastName);
+        for (int i = 0; i < counter; i++) {
+            if (addressBook[i].person.equals(person)) {
+                return new Address(addressBook[i].person.firstName, addressBook[i].person.lastName, addressBook[i].address);
             }
         }
         return null;

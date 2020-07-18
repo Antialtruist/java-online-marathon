@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CreateRecordServlet extends HttpServlet {
        
 	private AddressBook addressBook;
+	private String message = "";
 	
 	@Override
 	public void init() {
@@ -19,6 +20,7 @@ public class CreateRecordServlet extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("message", message);
 		request.getRequestDispatcher("/WEB-INF/create-record.jsp").forward(request, response);
 	}
 
@@ -26,6 +28,14 @@ public class CreateRecordServlet extends HttpServlet {
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String address = request.getParameter("address");
-		response.sendRedirect("/records/list");
+		
+		if (!addressBook.create(firstName, lastName, address)) {
+			message = "An error occurred! Please try again!";
+	        request.setAttribute("message", message);
+	        message = "";
+	        request.getRequestDispatcher("/WEB-INF/create-record.jsp").forward(request, response);
+		} else {
+			response.sendRedirect("/records/list");
+		}
 	}
 }
