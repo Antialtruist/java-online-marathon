@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+</head>
+<body>
+    <div th:replace="header"></div>
+    <h2 th:text="${marathon == null} ? 'All Students' : 'Students of ' + ${marathon.title}"></h2>
+    <div class="students-list" th:unless="${#lists.isEmpty(students)}">
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>№</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Actions</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="s : ${students}">
+                    <td th:text="${sStat.count}">1</td>
+                    <td>
+                        <a th:text="${s.firstName} + ' ' + ${s.lastName}"
+                            th:href="${marathon == null} ? @{'/students/edit/' + ${s.id}} :
+                                        @{'/students/' + ${marathon.id} + '/edit/' + ${s.id}}"></a>
+                    </td>
+                    <td th:text="${s.email}"></td>
+                    <td>
+                        <a th:text="${marathon == null} ? 'Delete' : 'Remove from marathon'"
+                            th:href="${marathon == null} ? @{'/students/delete/' + ${s.id}} :
+                                        @{'/students/' + ${marathon.id} + '/delete/' + ${s.id}}"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+
+    <form th:if="${marathon != null}" th:action="'/students/' + ${marathon.id} + '/add'">
+        <button type="submit">Add student to Marathon</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Marathons</title>
+    </head>
+    <div th:replace="header"></div>
+    <body>
+        <div class="marathons-list" th:unless="${#lists.isEmpty(allMarathons)}">
+            <h2>Marathons</h2>
+            <table border="1">
+
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Title</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="m: ${allMarathons}">
+                        <td th:text="${mStat.count}">1</td>
+                        <td>
+                            <a th:text="${m.title}" th:href="@{/students/{marathon_id}(marathon_id=${m.id})}"></a>
+                        </td>
+                        <td>
+                            <a th:href="@{/marathons/edit/{id}(id=${m.id})}">Edit</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/marathons/delete/{id}(id=${m.id})}">Close</a>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <br>
+        </div>
+        <form method="post">
+            <button type="submit">Create marathon</button>
+        </form>
+    </body>
+</html>

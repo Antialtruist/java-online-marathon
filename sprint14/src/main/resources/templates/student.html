@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>New Student</title>
+</head>
+<body>
+    <div th:replace="header"></div>
+    <h2 th:text="${student.id} == null ? 'Create student' : 'Edit student' + ${student.id}"></h2>
+    <form th:method="post" th:object="${student}"
+          th:action="@{${update == null} ?
+            @{${marathonId == null} ? '/students/add' : '/students/' + ${marathonId} + '/add'} :
+            @{${marathonId == null} ? '/students/update/' + ${studentId} : '/students/' + ${marathonId} + '/update/' + ${studentId}} }">
+        <table>
+            <tr>
+                <td>
+                    <label for="first-name">First name:</label>
+                </td>
+                <td>
+                    <input type="text" id="first-name" th:field="*{firstName}"
+                           th:text="${firstName}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="last-name">Last name:</label>
+                </td>
+                <td>
+                    <input type="text" id="last-name" th:field="*{lastName}"
+                           th:value="${lastName}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="email">Email:</label>
+                </td>
+                <td>
+                    <input type="text" id="email" th:field="*{email}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="password">Password:</label>
+                </td>
+                <td>
+                    <input type="text" id="password" th:field="*{password}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="reset" value="Clear"/>
+                </td>
+                <td>
+                    <input type="submit" value="Submit"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
